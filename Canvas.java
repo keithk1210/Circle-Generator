@@ -56,28 +56,25 @@ public class Canvas extends JPanel {
       //draw circle
 
 
-    double centerX = this.diameter / 2.0;
-    double centerY = this.diameter / 2.0;
+    int centerX = this.diameter / 2;
+    int centerY = this.diameter / 2;
 
     System.out.println("Center coords: " + centerX + ", " + centerY);
     for (int d = 1, index = 0; d <= this.diameter; d += 2) {
-      System.out.println("D is: " + d);
-      for (int x = 0; x < this.rows; x++) {
-          for (int y = 0; y < this.cols; y++) {
-              double distance = Math.hypot(Math.abs(x + .5 - centerX),Math.abs(y + .5 - centerY));
-              System.out.println("Distance from " + centerX + ", " + centerY + " to " + x + ", " + y + " is " + distance);
-              if (Math.abs(distance - (d/ 2.0)) <= 0.5) {
-                   
-                    g.setColor(Resources.colors[index]);
-                    g.fillRect(x * rowWid, y * rowHt, rowWid, rowHt);
-              }
-          }
+      for(double degrees = 0; degrees < 360; degrees += .5 ) {
+          double radians = degrees * (Math.PI/180);
+          int x = (int) Math.round((Math.sin(radians) * (d / 2.0) + centerX));
+          int y =  (int) Math.round((Math.cos(radians) * (d / 2.0) + centerY));
+          System.out.println(x + ", " + y );
+          g.setColor(Resources.colors[index]);
+          g.fillRect(x * rowWid, y * rowHt, rowWid, rowHt);
       }
       index = (index + 1 > 5) ? 0: index + 1;
     }
-      
-    }
   }
+      
+  }
+  
 
   
 
